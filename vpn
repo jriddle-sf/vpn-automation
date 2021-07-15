@@ -1,0 +1,21 @@
+#!/usr/bin/env expect
+
+set timeout 20
+
+set client "/opt/cisco/anyconnect/bin/vpn"
+
+set host $env(ANYCONNECT_CONF_HOST)
+set username $env(ANYCONNECT_CONF_USER)
+set password $env(ANYCONNECT_CONF_PASS)
+set password "${password}/otp"
+set passcode [lindex $argv 0];
+
+spawn "${client}"
+
+expect "VPN>" { send "connect ${host}\r" }
+expect "Username:" { send "${username}\r" }
+expect "Passcode:" { send "${password}\r" }
+expect "Answer:" { send "${passcode}\r" }
+expect "accept?*" { send "y\r" }
+
+expect "state: Connected" { send "exit\r" }
