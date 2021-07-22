@@ -4,14 +4,16 @@ This tools is helpful for quick connecting to the Saleforce, Inc network through
 
 ## Installation
 
-### Step 1.0 Clone Project.
+[ ] Step 1.0 - Clone Project
+[ ] Step 2.0 - Create A Symlink
 
-1. Open your shell
-1. Navigate to the root of your projects directory.
-1. Clone this repository into your projects folder.
-1. Navigate to the `vpn-automation` directory
+### Clone Project.
 
-### Step 2.0 Create A Symlink
+1. **Open** your shell
+1. **Navigate** to the root of your projects directory.
+1. **Execute:** `git clone git@github.com:jriddle-sf/vpn-automation.git && cd ./vpn-automation`
+
+### Create A Symlink
 
 The easiest way to utilize `vpn` is to create a symlink from the project to the `/usr/local/bin` directory on your machine. The following steps assume you are still in the `vpn-automation` directory.
 
