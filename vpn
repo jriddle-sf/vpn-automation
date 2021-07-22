@@ -3,19 +3,45 @@
 set timeout 20
 
 set client "/opt/cisco/anyconnect/bin/vpn"
-
+set connect "true"
 set host $env(ANYCONNECT_CONF_HOST)
 set username $env(ANYCONNECT_CONF_USER)
 set password $env(ANYCONNECT_CONF_PASS)
 set password "${password}/otp"
-set passcode [lindex $argv 0];
+set option [lindex $argv 0]
+
+proc usage {} {
+  puts ""
+  puts "Usage: vpn \[-sd\] OR vpn ONE_TIME_PASSWORD"
+  puts ""
+  puts "  OPTIONS:"
+  puts ""
+  puts "    -s    status" 
+  puts "    -d    disconnect"
+  puts ""
+  exit
+}
+
+if { $option == "" } {
+  [usage]
+}
+
+if { $option == "-s" } {
+  exec "${client}" "status" >@ stdout
+  exit
+}
+
+if { $option == "-d" } {
+  exec "${client}" "disconnect" >@ stdout
+  exit
+}
 
 spawn "${client}"
 
 expect "VPN>" { send "connect ${host}\r" }
 expect "Username:" { send "${username}\r" }
 expect "Passcode:" { send "${password}\r" }
-expect "Answer:" { send "${passcode}\r" }
+expect "Answer:" { send "${option}\r" }
 expect "accept?*" { send "y\r" }
 
 expect "state: Connected" { send "exit\r" }
